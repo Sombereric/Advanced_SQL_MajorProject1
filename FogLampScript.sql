@@ -1,6 +1,9 @@
 -- Using statements
-
+USE FogLampManufacturing;
+GO
+    
 -- Creating the Database
+CREATE DATABASE FogLampManufacturing;
 
 -- creating the tables 
 CREATE TABLE Workers (
@@ -117,3 +120,80 @@ CREATE TABLE SystemConfig (
 );
 
 -- Test information for the database
+INSERT INTO Workers (EmployeeNumber, FirstName, LastName, ExperienceLevel, EfficiencyRating)
+VALUES
+('E1001', 'John', 'Carter', 3, 1.15),
+('E1002', 'Sarah', 'Nguyen', 2, 1.00),
+('E1003', 'Mike', 'Patel', 1, 0.85),
+('E1004', 'Emma', 'Lopez', 4, 1.25),
+('E1005', 'Chris', 'Moore', 2, 0.95);
+GO
+
+INSERT INTO Workstations (StationName, StationNumber)
+VALUES
+('Housing Assembly', 1),
+('Lens Mounting', 2),
+('Wiring Assembly', 3),
+('Final Inspection', 4),
+('Packaging', 5);
+GO
+
+INSERT INTO Orders (OrderNumber, LampType, TargetQuantity, CompletedQuantity, FailedQuantity, Status)
+VALUES
+('ORD-1001', 'Fog Lamp A', 500, 125, 8, 'InProgress'),
+('ORD-1002', 'Fog Lamp B', 250, 40, 3, 'Pending');
+GO
+
+INSERT INTO Bins (WorkstationID, BinName, CurrentLevel, MaxLevel, LowThreshold, Status)
+VALUES
+(1, 'Housing Units', 40, 50, 10, 'OK'),
+(1, 'Mount Screws', 12, 50, 10, 'OK'),
+(2, 'Lens Covers', 8, 40, 10, 'Low'),
+(2, 'Seal Kits', 25, 40, 8, 'OK'),
+(3, 'Wiring Harnesses', 6, 30, 8, 'Low'),
+(3, 'Connectors', 20, 30, 6, 'OK'),
+(4, 'Inspection Labels', 15, 25, 5, 'OK'),
+(5, 'Packaging Boxes', 18, 30, 6, 'OK');
+GO
+
+INSERT INTO WorkstationAssignments (WorkstationID, WorkerID, OrderID, Status)
+VALUES
+(1, 1, 1, 'Working'),
+(2, 2, 1, 'Working'),
+(3, 3, 1, 'Waiting'),
+(4, 4, 1, 'Working'),
+(5, 5, 2, 'Waiting');
+GO
+
+INSERT INTO ProductionEvents (WorkstationID, WorkerID, OrderID, EventType, CycleTimeSeconds, Notes)
+VALUES
+(1, 1, 1, 'LampStarted', 55, 'Started new housing assembly'),
+(1, 1, 1, 'LampCompleted', 58, 'Completed housing stage'),
+(2, 2, 1, 'LampStarted', 65, 'Lens mounting started'),
+(2, 2, 1, 'LampFailed', 72, 'Seal issue found'),
+(4, 4, 1, 'LampCompleted', 50, 'Inspection passed');
+GO
+
+INSERT INTO BinAlerts (BinID, WorkstationID, AlertStatus, AlertCreatedAt, AlertDueAt, Notes)
+VALUES
+(3, 2, 'Pending', DATEADD(MINUTE, -2, SYSDATETIME()), DATEADD(MINUTE, 3, SYSDATETIME()), 'Lens Covers running low'),
+(5, 3, 'Missed', DATEADD(MINUTE, -8, SYSDATETIME()), DATEADD(MINUTE, -3, SYSDATETIME()), 'Runner missed refill time');
+GO
+
+INSERT INTO SystemLogs (WorkstationID, WorkerID, BinID, LogType, Message)
+VALUES
+(1, 1, 1, 'Production', 'Worker started housing assembly'),
+(1, 1, 1, 'Production', 'Housing assembly completed'),
+(2, 2, 3, 'Alert', 'Lens Covers bin flagged low'),
+(3, 3, 5, 'Alert', 'Wiring Harnesses bin refill missed'),
+(4, 4, NULL, 'Inspection', 'Fog lamp passed final inspection');
+GO
+
+INSERT INTO SystemConfig (ConfigKey, ConfigValue, Description)
+VALUES
+('SimulationSpeedMultiplier', '1.0', 'Controls workstation simulation speed'),
+('RunnerResponseMinutes', '5', 'Minutes allowed before refill is marked missed'),
+('DefaultLampBuildSeconds', '60', 'Default build time for one lamp'),
+('DashboardRefreshSeconds', '3', 'Refresh interval for dashboard screens'),
+('AndonRefreshSeconds', '2', 'Refresh interval for workstation Andon display');
+GO
