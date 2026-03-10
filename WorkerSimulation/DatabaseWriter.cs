@@ -8,7 +8,15 @@ namespace WorkerSimulation
 {
     internal class DatabaseWriter
     {
-        public void binLevelReader()
+        public void workstationStatusWriter()
+        {
+
+        }
+        public void partConsumptionWriter()
+        {
+
+        }
+        public void lampCreationLog()
         {
 
         }

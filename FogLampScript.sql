@@ -119,15 +119,35 @@ CREATE TABLE SystemConfig (
     Description NVARCHAR(255) NULL,
     UpdatedAt DATETIME2 NOT NULL DEFAULT SYSDATETIME()
 );
+GO
+
+--Procedures
+CREATE PROCEDURE CheckWorkerLogin
+    @EmployeeIDNumber NVARCHAR(50),
+    @WorkerPassword NVARCHAR(100)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (
+        SELECT 1
+        FROM Workers
+        WHERE EmployeeNumber = @EmployeeIDNumber
+        AND WorkerID = @WorkerPassword
+        AND IsActive = 1
+    )
+        SELECT CAST(1 AS BIT) AS LoginSuccess;
+    ELSE
+        SELECT CAST(0 AS BIT) AS LoginSuccess;
+END;
+GO
 
 -- Test information for the database
-INSERT INTO Workers (EmployeeNumber, FirstName, LastName, ExperienceLevel, EfficiencyRating)
+INSERT INTO Workers (EmployeeNumber, FirstName, LastName, WorkerPassword, ExperienceLevel, EfficiencyRating)
 VALUES
-('E1001', 'John', 'Carter', 3, 1.15),
-('E1002', 'Sarah', 'Nguyen', 2, 1.00),
-('E1003', 'Mike', 'Patel', 1, 0.85),
-('E1004', 'Emma', 'Lopez', 4, 1.25),
-('E1005', 'Chris', 'Moore', 2, 0.95);
+('1001', 'John', 'Carter', 'pass123', 3, 1.15),
+('1002', 'Sarah', 'Nguyen', 'lamp456', 2, 1.00),
+('1003', 'Mike', 'Patel', 'fog789', 1, 0.85);
 GO
 
 INSERT INTO Workstations (StationName, StationNumber)
