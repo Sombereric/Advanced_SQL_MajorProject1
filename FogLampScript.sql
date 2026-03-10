@@ -11,6 +11,7 @@ CREATE TABLE Workers (
     EmployeeNumber NVARCHAR(50) NOT NULL UNIQUE,
     FirstName NVARCHAR(100) NOT NULL,
     LastName NVARCHAR(100) NOT NULL,
+    WorkerPassword NVARCHAR(100) NOT NULL,
     ExperienceLevel INT NOT NULL DEFAULT 1,
     EfficiencyRating DECIMAL(5,2) NOT NULL DEFAULT 1.00,
     IsActive BIT NOT NULL DEFAULT 1
