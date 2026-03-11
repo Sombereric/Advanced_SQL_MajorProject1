@@ -209,12 +209,17 @@ VALUES
 (3, 3, 5, 'Alert', 'Wiring Harnesses bin refill missed'),
 (4, 4, NULL, 'Inspection', 'Fog lamp passed final inspection');
 GO
-
+    
 INSERT INTO SystemConfig (ConfigKey, ConfigValue, Description)
 VALUES
 ('SimulationSpeedMultiplier', '1.0', 'Controls workstation simulation speed'),
 ('RunnerResponseMinutes', '5', 'Minutes allowed before refill is marked missed'),
 ('DefaultLampBuildSeconds', '60', 'Default build time for one lamp'),
 ('DashboardRefreshSeconds', '3', 'Refresh interval for dashboard screens'),
-('AndonRefreshSeconds', '2', 'Refresh interval for workstation Andon display');
+('AndonRefreshSeconds', '2', 'Refresh interval for workstation Andon display'),
+('DefaultBinMaxLevel', '50', 'Default maximum capacity for a bin'),
+('DefaultBinLowThreshold', '10', 'Default low-level warning threshold for bins'),
+('DefaultWorkstationCount', '5', 'Default number of workstations in the system'),
+('MaxConsecutiveLampFailures', '3', 'Number of failures before workstation halts'),
+('DefaultOrderTargetQuantity', '500', 'Default order target quantity for production');
 GO
