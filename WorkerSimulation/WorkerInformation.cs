@@ -8,5 +8,10 @@ namespace WorkerSimulation
 {
     internal class WorkerInformation
     {
+        public int WorkerID;
+        public string WorkerName;
+        public string WorkerExperienceLevel;
+        public double WorkerFailureRate;
+        public int WorkStationID;
     }
 }

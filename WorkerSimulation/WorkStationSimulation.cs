@@ -26,7 +26,7 @@ namespace WorkerSimulation
         //if three failures in a row employee stops? 
 
         //use procedure to add a single fog 
-        public void workStationSimulationRunner(/*double WorkerFailureRate*/)
+        public void workStationSimulationRunner()
         {
             while (workStationRunning)
             {
